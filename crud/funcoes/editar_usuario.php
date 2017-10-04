@@ -60,8 +60,13 @@ if ((getenv("REQUEST_METHOD") == "POST") && ($_POST['nome'] != '') && ($_POST['c
 	mysql_query($sql, $conexao);
 	if($_POST['telefone'] != ''){
 		$telefones = $_POST['telefone'];
+		$idTel = $_POST['idTelefone'];
+		$aux = 0;
 		foreach($telefones as $tel){
-			$sql2 = "INSERT INTO telefone(id_usuario, numero_telefone) VALUES ( '$id', $tel)";
+			$sql2 = "update telefone set numero_telefone = $tel where id = '$idTel[$aux]' and id_usuario = '$id'";
+			$aux++;
+			//echo $sql2;
+			//die();
 			mysql_query($sql2, $conexao);
 		}
 	}
@@ -85,13 +90,13 @@ while ($linha = mysql_fetch_array($resultado)){
 <div class="container">
     <div class="sidebar1">
         <ul class="nav">
-          <li><a href="?">InÌcio</a></li>            
-          <li><a href="../?pagina=cadastro">Cadastrar Usu·rio</a></li>
-          <li><a href="../?pagina=visualizar">Visualizar Usu·rios</a></li>
+          <li><a href="?">In√≠cio</a></li>            
+          <li><a href="../?pagina=cadastro">Cadastrar Usu√°rio</a></li>
+          <li><a href="../?pagina=visualizar">Visualizar Usu√°rios</a></li>
         </ul>
     </div>
 	<div class="content">
-        <h1>Editar Usu·rio</h1>
+        <h1>Editar Usu√°rio</h1>
         <form id="formulario" name="formulario" method="post" accept-charset="utf-8">
               Nome do usu&aacute;rio:
               <input type="text" name="nome" id="nome" value=<?php echo $linha['nome']; ?>><br/><br/>
@@ -114,11 +119,12 @@ while ($linha = mysql_fetch_array($resultado)){
               $i = 1;
               while ($linha2 = mysql_fetch_array($resultado2)){?>
                 Telefone <?php echo $i++;?>:
-                <input type="text" name="telefone[]" id="telefone" value=<?php echo $linha2['numero_telefone']; ?>>
+                <input type="text" name="telefone[]" id="telefone" value="<?php echo $linha2['numero_telefone'];?>">
+                <input type="hidden" name="idTelefone[]" id="idTelefone" value=<?php echo $linha2['id']; ?>>
                 <br>
               <?php }?>
               <br>
-              <input type="button" id="adicionar_campo" title="M·ximo de 10 telefones permitidos" value="Adicionar outro telefone">
+              <input type="button" id="adicionar_campo" title="M√°ximo de 10 telefones permitidos" value="Adicionar outro telefone">
               </div>
               <div class="form-group">
                 <br/><br/>
@@ -133,9 +139,9 @@ while ($linha = mysql_fetch_array($resultado)){
         </div>
     </div>
 	<script>
-		// FunÁıes para a inserÁ„o de dados autom·ticos a partir do CEP
-		function limpa_formul·rio_cep() {
-			// Limpa valores do formul·rio de cep.
+		// Fun√ß√µes para a inser√ß√£o de dados autom√°ticos a partir do CEP
+		function limpa_formul√°rio_cep() {
+			// Limpa valores do formul√°rio de cep.
             $("#rua").val("");
             $("#bairro").val("");
             $("#cidade").val("");
@@ -143,12 +149,12 @@ while ($linha = mysql_fetch_array($resultado)){
 		}
 		
 		$("#cep").blur(function() {
-			//Nova vari·vel "cep" somente com dÌgitos.
+			//Nova vari√°vel "cep" somente com d√≠gitos.
             var cep = $(this).val().replace(/\D/g, '');
 
         	//Verifica se campo cep possui valor informado.
 			if (cep != "") {
-		        //Express„o regular para validar o CEP.
+		        //Express√£o regular para validar o CEP.
                 var validacep = /^[0-9]{8}$/;
 
                 //Valida o formato do CEP.
@@ -169,22 +175,22 @@ while ($linha = mysql_fetch_array($resultado)){
 							$("#cidade").val(dados.localidade);
 							$("#estado").val(dados.uf);
 						} else {
-							//CEP pesquisado n„o foi encontrado.
-							limpa_formul·rio_cep();
-							alert("CEP n„o encontrado.");
+							//CEP pesquisado n√£o foi encontrado.
+							limpa_formul√°rio_cep();
+							alert("CEP n√£o encontrado.");
 						}
 					});
 				} else {
-					//cep È inv·lido.
-					limpa_formul·rio_cep();
-					alert("Formato de CEP inv·lido.");
+					//cep √© inv√°lido.
+					limpa_formul√°rio_cep();
+					alert("Formato de CEP inv√°lido.");
 				}
 			} else {
-				//cep sem valor, limpa formul·rio.
-				limpa_formul·rio_cep();
+				//cep sem valor, limpa formul√°rio.
+				limpa_formul√°rio_cep();
 			}
 		});
-        // FunÁıes para a adiÁ„o e remoÁ„o de telefones
+        // Fun√ß√µes para a adi√ß√£o e remo√ß√£o de telefones
         var campos_max = 10;
         var x = 1;
         $('#adicionar_campo').click (function(e) {
