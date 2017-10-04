@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta http-equiv="content-Type" content="text/html; charset=utf-8" /> 
 <title>Visualizar Usu&aacute;rios</title>
 <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
 </head>
@@ -34,13 +34,13 @@
 		            <th width="12%">Nome</th>
 		            <th width="6%">CEP</th>
 		            <th width="18%">Rua</th>
-		            <th width="6%">Número</th>
+		            <th width="6%">NÃºmero</th>
 		            <th width="6%">Complemento</th>
 		            <th width="8%">Bairro</th>
 					<th width="10%">Cidade</th>
 		            <th width="6%">Estado</th>
 		            <th width="6%">Telefone</th>
-                    <th width="8%">Ações</th>
+                    <th width="8%">AÃ§Ãµes</th>
 		        </tr>
 		    </thead>
 		    <tbody id="resultados">            
@@ -63,9 +63,9 @@
 						}?></td>
                     <td>
                     <div id="acoes">
-                    	<a id=<?php echo $res['id'];?> name="editar" title="Editar Usuário" href="funcoes/editar_usuario.php?id=<?php echo $res['id'];?>&pagina=editar"><img src="img/edit_mini.gif" /></a> 
+                    	<a id=<?php echo $res['id'];?> name="editar" title="Editar UsuÃ¡rio" href="funcoes/editar_usuario.php?id=<?php echo $res['id'];?>&pagina=editar"><img src="img/edit_mini.gif" /></a> 
                         &nbsp;
-			    		<a id=<?php echo $res['id'];?> name="excluir" title="Excluir Usuário" href="funcoes/excluir_usuario.php?id=<?php echo $res['id'];?>"><img src="img/action_delete.gif" /></a>
+			    		<a id=<?php echo $res['id'];?> name="excluir" title="Excluir UsuÃ¡rio" href="funcoes/excluir_usuario.php?id=<?php echo $res['id'];?>"><img src="img/action_delete.gif" /></a>
 					</div>	
                     </td>
 				</tr>
