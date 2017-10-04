@@ -3,6 +3,18 @@
 <meta http-equiv="content-Type" content="text/html; charset=iso-8859-1" />
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script>
+// MÃ¡scara para Telefone
+	function formatar(mascara, documento){
+		var i = documento.value.length;
+		var saida = mascara.substring(0,1);
+		var texto = mascara.substring(i);
+	  
+		if (texto.substring(0,1) != saida){
+			documento.value += texto.substring(0,1);
+		}
+	}
+</script>
 </head>
 <?php
 if ((getenv("REQUEST_METHOD") == "POST") && ($_POST['nome'] != '') && ($_POST['cep'] != '')) {
@@ -53,26 +65,30 @@ if ((getenv("REQUEST_METHOD") == "POST") && ($_POST['nome'] != '') && ($_POST['c
 	$stmt = $conn->query($query);
 	$list = $stmt->fetchAll(PDO::FETCH_ASSOC);
 	$idUsuario = $list[0]['id'];
-
-	//$sql2 = "INSERT INTO telefone(id_usuario, numero_telefone) VALUES ( '$idUsuario', ";		
+	
 	foreach($telefones as $tel){
 		$sql2 = "INSERT INTO telefone(id_usuario, numero_telefone) VALUES ( '$idUsuario', $tel)";
 		$ret2 = $conn->exec($sql2);
 	}
 } else{
-		
+	if(isset($_POST["Cadastrar"])){
+		echo '<script type="text/javascript" charset="utf-8">';
+		echo 'alert("Erro! Preenchimento de Nome e CEP obrigatÃ³rio!");';
+		echo 'location.href="./?pagina=cadastro";';
+		echo '</script>';
+	}
 }
 ?>
 <body>
     <h1>Cadastro de usu&aacute;rio</h1>
     <form id="formulario" name="formulario" method="post" accept-charset="utf-8">
-          Nome do usuário:
+          Nome do usuÃ¡rio: *
           <input type="text" name="nome" id="nome"><br/><br/>
-          CEP:
+          CEP: *
           <input type="text" name="cep" id="cep"><br/><br/>
           Rua:
           <input type="text" name="rua" id="rua"><br/><br/>
-          Número:
+          NÃºmero:
           <input type="text" name="numero" id="numero"><br/><br/>	  
           Complemento:
           <input type="text" name="complemento" id="complemento"><br/><br/>
@@ -84,22 +100,24 @@ if ((getenv("REQUEST_METHOD") == "POST") && ($_POST['nome'] != '') && ($_POST['c
           <input type="text" name="estado" id="estado"><br/><br/>
           <div id="telefones">
           Telefone:
-          <input type="text" name="telefone[]" id="telefone">
-          <input type="button" id="adicionar_campo" title="Máximo de 10 telefones permitidos" value="Adicionar outro telefone">
+          <input type="text" name="telefone[]" id="telefone" maxlength="13" OnKeyPress="formatar('##-####-#####', this)">
+          <input type="button" id="adicionar_campo" title="MÃ¡ximo de 10 telefones permitidos" value="Adicionar outro telefone">
           </div>
           <div class="form-group">
             <br/><br/>
-            <input class="envia" value="Cadastrar" type="submit" />
+            <input class="envia" name="Cadastrar" id="Cadastrar" value="Cadastrar" type="submit" />
 		  	<input type="hidden" name="acao" id="acao" value="cadastrar">
-          </div>               
+            <input type="button" value="Voltar" onClick="JavaScript: window.history.back();">
+          </div>
+  		  <br>       
+          <p>Campos com * sÃ£o obrigatÃ³rios.</p>
     </form>
 	<script type="text/javascript">	
 	$(document).ready(function(e) {
-		
-		
-		// Funções para a inserção de dados automáticos a partir do CEP
-		function limpa_formulário_cep() {
-			// Limpa valores do formulário de cep.
+
+		// FunÃ§Ãµes para a inserÃ§Ã£o de dados automÃ¡ticos a partir do CEP
+		function limpa_formulÃ¡rio_cep() {
+			// Limpa valores do formulÃ¡rio de cep.
             $("#rua").val("");
             $("#bairro").val("");
             $("#cidade").val("");
@@ -107,12 +125,12 @@ if ((getenv("REQUEST_METHOD") == "POST") && ($_POST['nome'] != '') && ($_POST['c
 		}
 		
 		$("#cep").blur(function() {
-			//Nova variável "cep" somente com dígitos.
+			//Nova variÃ¡vel "cep" somente com dÃ­gitos.
             var cep = $(this).val().replace(/\D/g, '');
 
         	//Verifica se campo cep possui valor informado.
 			if (cep != "") {
-		        //Expressão regular para validar o CEP.
+		        //ExpressÃ£o regular para validar o CEP.
                 var validacep = /^[0-9]{8}$/;
 
                 //Valida o formato do CEP.
@@ -133,29 +151,29 @@ if ((getenv("REQUEST_METHOD") == "POST") && ($_POST['nome'] != '') && ($_POST['c
 							$("#cidade").val(dados.localidade);
 							$("#estado").val(dados.uf);
 						} else {
-							//CEP pesquisado não foi encontrado.
-							limpa_formulário_cep();
-							alert("CEP não encontrado.");
+							//CEP pesquisado nÃ£o foi encontrado.
+							limpa_formulÃ¡rio_cep();
+							alert("CEP nÃ£o encontrado.");
 						}
 					});
 				} else {
-					//cep é inválido.
-					limpa_formulário_cep();
-					alert("Formato de CEP inválido.");
+					//cep Ã© invÃ¡lido.
+					limpa_formulÃ¡rio_cep();
+					alert("Formato de CEP invÃ¡lido.");
 				}
 			} else {
-				//cep sem valor, limpa formulário.
-				limpa_formulário_cep();
+				//cep sem valor, limpa formulÃ¡rio.
+				limpa_formulÃ¡rio_cep();
 			}
 		});
 			
-		// Funções para a adição e remoção de telefones
+		// FunÃ§Ãµes para a adiÃ§Ã£o e remoÃ§Ã£o de telefones
 		var campos_max = 10;
 		var x = 1;
 		$('#adicionar_campo').click (function(e) {
 			e.preventDefault();     //prevenir novos clicks
 			if (x < campos_max) {
-				$('#telefones').append('<div style="padding-top:1%;">Telefone '+(x+1)+': <input type="text" name="telefone[]" id="telefone'+x+'">\
+				$('#telefones').append('<div style="padding-top:1%;">Telefone '+(x+1)+': <input type="text" name="telefone[]" id="telefone'+x+'" OnKeyPress="formatar("##-####-####", this)">\
 						<a href="#" style="color:red;" class="remove_campo" id="remove' + x +'" title="Remover campo">X</a></div>');
 				x++;
 			}
