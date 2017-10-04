@@ -2,16 +2,16 @@
 
 <html lang="en">
 	<head>
-    	<title>P·gina de Usu·rio</title>
+    	<title>P√°gina de Usu√°rio</title>
 	    <link rel="stylesheet" type="text/css" href="./css/estilo.css">
 	</head>
   	<body>
   	<div class="container">
         <div class="sidebar1">
             <ul class="nav">
-              <li><a href="?">InÌcio</a></li>            
-              <li><a href="?pagina=cadastro">Cadastrar Usu·rio</a></li>
-              <li><a href="?pagina=visualizar">Visualizar Usu·rios</a></li>
+              <li><a href="?">In√≠cio</a></li>            
+              <li><a href="?pagina=cadastro">Cadastrar Usu√°rio</a></li>
+              <li><a href="?pagina=visualizar">Visualizar Usu√°rios</a></li>
             </ul>
 		</div>
         <div class="content">
@@ -32,10 +32,10 @@
 				
 				default:
 				echo "<h1>Seja Bem-Vindo</h1>
-						<p>Essa p·gina contÈm funÁıes para gerenciamento de usu·rios.<br>
-					  	Por meio dela È possÌvel cadastrar, visualizar e excluir usu·rios.<br>
-						O menu do lado esquerdo apresenta as funÁıes inclusas nesse sistema atÈ o momento.<br><br>
-						Obs.: A exclus„o de usu·rios È feita ao visualizar usu·rios.
+						<p>Essa p√°gina cont√©m fun√ß√µes para gerenciamento de usu√°rios.<br>
+					  	Por meio dela √© poss√≠vel cadastrar, visualizar e excluir usu√°rios.<br>
+						O menu do lado esquerdo apresenta as fun√ß√µes inclusas nesse sistema at√© o momento.<br><br>
+						Obs.: A exclus√£o de usu√°rios √© feita ao visualiz√°-los.
 						</p>";
 				break;	
 			}
